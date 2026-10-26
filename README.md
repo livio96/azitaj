@@ -5,7 +5,7 @@ A small multi-page website in plain HTML and CSS. It doesn't use a framework or 
 ## Files
 
 ```
-index.html            Home: one screen — logo, intro, four tiles linking to the pages below
+index.html            Home: one screen — logo, portrait + Visionary Approach, three tiles linking to the pages below
 about.html            A Visionary Approach + About Me
 approach.html         The Approach
 living.html           Effortless Living
@@ -19,8 +19,10 @@ assets/img/           Portrait, image tiles, social share card
 
 ## Page structure
 
-The home page fits in one screen on desktop: logo, intro line, four image tiles
-(About Me, The Approach, Effortless Living, Residences) and a contact strip.
+The home page fits in one screen on desktop: logo and intro line, then two
+blocks on top (framed portrait + "A Visionary Approach" with an About Me button)
+and three image tiles below (Residences, The Approach, Effortless Living),
+then a contact strip.
 Each tile opens its own page. Every inner page has the same top menu and a
 "Continue" link to the next page: About → Approach → Living → Residences → Contact.
 
