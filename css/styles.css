@@ -484,7 +484,7 @@ p { margin: 0; }
 }
 .home-portrait {
   display: block;
-  height: clamp(10rem, 24svh, 17rem);
+  height: clamp(11rem, 30svh, 21rem);
   padding: 7px;
   border: 1px solid var(--hairline);
   background: var(--ivory);
@@ -497,7 +497,7 @@ p { margin: 0; }
 .home-visionary p { font-size: clamp(1rem, 0.85rem + 0.7vh, 1.15rem); line-height: 1.6; margin-bottom: clamp(0.9rem, 2.2vh, 1.5rem); }
 .page-home .home-visionary .eyebrow-title { font-size: clamp(1.15rem, 0.9rem + 1vh, 1.5rem); }
 /* logo scales with the window height so tiles always fit below it */
-.page-home .hero-logo { max-width: min(56rem, calc(20svh * 3.18)); }
+.page-home .hero-logo { max-width: min(56rem, calc(16.5svh * 3.18)); }
 .page-home .hero-intro {
   max-width: 48rem;
   margin-top: clamp(0.5rem, 2vh, 1.25rem);
@@ -582,9 +582,9 @@ p { margin: 0; }
 /* Short laptop screens: tighten the home page so it still fits one screen */
 @media (min-width: 721px) and (max-height: 800px) {
   .page-home .site-header { padding-block: 0.7rem 0; }
-  .page-home .hero-logo { max-width: calc(17svh * 3.18); }
+  .page-home .hero-logo { max-width: calc(14svh * 3.18); }
   .page-home .hero-intro { font-size: 1.05rem; line-height: 1.45; margin-top: 0.4rem; }
-  .home-portrait { height: 9.5rem; }
+  .home-portrait { height: 12rem; }
   .home-visionary .short-rule { margin-block: 0.5rem 0.6rem; }
   .home-visionary p { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
   .home-visionary .btn { padding-block: 0.6rem; }
