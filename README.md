@@ -1,25 +1,32 @@
 # Azita J — azitaj.com
 
-A one-page website in plain HTML and CSS. It doesn't use a framework or build step, so it runs on any web host.
+A small multi-page website in plain HTML and CSS. It doesn't use a framework or build step, so it runs on any web host.
 
 ## Files
 
 ```
-index.html            The whole page (all sections, in order)
+index.html            Home: one screen — logo, intro, four tiles linking to the pages below
+about.html            A Visionary Approach + About Me
+approach.html         The Approach
+living.html           Effortless Living
+residences.html       Residences gallery
+contact.html          Contact details + inquiry form
 css/styles.css        All styling. Brand colors and fonts are at the top under :root
 js/main.js            Small extras: form sending, nav highlight, footer year
 assets/logo/          Transparent logo, wordmark, J monogram, favicons
 assets/img/           Portrait, image tiles, social share card
 ```
 
-## Section order
+## Page structure
 
-Hero (logo + intro) → three image tiles → A Visionary Approach → About Me (with portrait)
-→ The Approach → Effortless Living → Residences → Contact (form + email/phone) → Footer
+The home page fits in one screen on desktop: logo, intro line, four image tiles
+(About Me, The Approach, Effortless Living, Residences) and a contact strip.
+Each tile opens its own page. Every inner page has the same top menu and a
+"Continue" link to the next page: About → Approach → Living → Residences → Contact.
 
 ## Common edits
 
-- **Text:** open `index.html` and edit the words between the tags. Each section is labelled with a comment like `<!-- ============ ABOUT ME ============ -->`.
+- **Text:** open the page's `.html` file and edit the words between the tags. Each section is labelled with a comment like `<!-- ============ ABOUT ME ============ -->`.
 - **Brand colors / fonts:** change the values at the top of `css/styles.css` (`--gold`, `--olive`, `--ivory`, etc.). Every section updates.
 - **Swap an image:** replace the file in `assets/img/` and keep the same filename. Recommended sizes:
   - `azita-portrait.jpg`: portrait, about 1000 × 1250 px
@@ -31,7 +38,7 @@ Hero (logo + intro) → three image tiles → A Visionary Approach → About Me 
 
 1. Go to https://formspree.io, sign up with Azita@azitaj.com, and create a new form.
 2. Copy the form ID (it looks like `xayzabcd`).
-3. In `index.html`, replace `YOUR_FORM_ID` in `action="https://formspree.io/f/YOUR_FORM_ID"` with that ID.
+3. In `contact.html`, replace `YOUR_FORM_ID` in `action="https://formspree.io/f/YOUR_FORM_ID"` with that ID.
 
 Until this is done, the form tells visitors to email or call instead.
 

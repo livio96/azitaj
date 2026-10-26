@@ -4,29 +4,13 @@
   var y = document.getElementById("year");
   if (y) y.textContent = new Date().getFullYear();
 
-  // "Inquire" buttons pre-select the interest in the form
-  document.querySelectorAll("[data-interest]").forEach(function (el) {
-    el.addEventListener("click", function () {
-      var sel = document.getElementById("f-interest");
-      if (sel) sel.value = el.getAttribute("data-interest");
+  // ?interest=residences|viewing on the contact page pre-selects the dropdown
+  var sel = document.getElementById("f-interest");
+  var want = new URLSearchParams(location.search).get("interest");
+  if (sel && want) {
+    Array.prototype.forEach.call(sel.options, function (o) {
+      if (o.text.toLowerCase().indexOf(want.toLowerCase()) !== -1) sel.value = o.value;
     });
-  });
-
-  // Highlight the nav link for the section in view
-  var links = Array.prototype.slice.call(document.querySelectorAll(".nav a"));
-  var targets = links
-    .map(function (a) { return document.querySelector(a.getAttribute("href")); })
-    .filter(Boolean);
-  if ("IntersectionObserver" in window && targets.length) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (!e.isIntersecting) return;
-        links.forEach(function (a) {
-          a.classList.toggle("is-current", a.getAttribute("href") === "#" + e.target.id);
-        });
-      });
-    }, { rootMargin: "-45% 0px -50% 0px" });
-    targets.forEach(function (t) { io.observe(t); });
   }
 
   // Inquiry form

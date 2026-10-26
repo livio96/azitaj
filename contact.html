@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Contact | Azita J</title>
+  <meta name="description" content="Inquire about available residences or arrange a private viewing with Azita J.">
+  <meta property="og:title" content="Azita J">
+  <meta property="og:description" content="The art of bringing a vision to life. Residences now available.">
+  <meta property="og:image" content="assets/img/share-card.jpg">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/logo/favicon-180.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="page-inner">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="header-mark" href="index.html" aria-label="Azita J home">
+        <img src="assets/logo/monogram-j.png" width="600" height="600" alt="">
+      </a>
+      <nav class="nav" aria-label="Main">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Me</a>
+        <a href="approach.html">The Approach</a>
+        <a href="living.html">Effortless Living</a>
+        <a href="residences.html">Residences</a>
+        <a href="contact.html" class="is-current" aria-current="page">Contact</a>
+      </nav>
+      <span class="header-rule" aria-hidden="true"></span>
+      <p class="header-motto">Where Vision Meets Art</p>
+    </div>
+  </header>
+  <main id="main">
+    <section class="section contact" id="contact">
+      <div class="wrap contact-grid">
+        <div class="contact-intro">
+          <h2 class="eyebrow-title">Contact</h2>
+          <span class="short-rule" aria-hidden="true"></span>
+          <p class="lead">
+            To inquire about available residences or arrange a private viewing,
+            send a note and Azita will respond personally.
+          </p>
+          <dl class="contact-list">
+            <div>
+              <dt>Email</dt>
+              <dd><a href="mailto:Azita@azitaj.com">Azita@azitaj.com</a></dd>
+            </div>
+            <div>
+              <dt>Phone</dt>
+              <dd><a href="tel:+15166609100">516-660-9100</a></dd>
+            </div>
+            <div>
+              <dt>Web</dt>
+              <dd>AzitaJ.com</dd>
+            </div>
+          </dl>
+        </div>
+
+        <!--
+          INQUIRY FORM
+          Sends through Formspree (free). To activate:
+          1. Create a form at https://formspree.io using Azita@azitaj.com
+          2. Replace YOUR_FORM_ID below with the ID Formspree gives you (e.g. xayzabcd)
+        -->
+        <form class="inquiry" id="inquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+          <div class="field">
+            <label for="f-name">Name</label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="f-phone">Phone <span class="optional">(optional)</span></label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="f-interest">I'm interested in</label>
+            <select id="f-interest" name="interest">
+              <option>Available residences</option>
+              <option>A private viewing</option>
+              <option>A general inquiry</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-message">Message</label>
+            <textarea id="f-message" name="message" rows="5"></textarea>
+          </div>
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-solid" type="submit">Send Inquiry</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <img class="footer-mark" src="assets/logo/monogram-j.png" width="600" height="600" alt="" loading="lazy">
+      <ul class="footer-contact">
+        <li>AzitaJ.com</li>
+        <li><a href="mailto:Azita@azitaj.com">Azita@azitaj.com</a></li>
+        <li><a href="tel:+15166609100">516-660-9100</a></li>
+      </ul>
+      <p class="footer-legal">&copy; <span id="year">2026</span> Azita J. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
