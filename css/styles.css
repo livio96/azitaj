@@ -484,7 +484,7 @@ p { margin: 0; }
 }
 .home-portrait {
   display: block;
-  height: clamp(11rem, 30svh, 21rem);
+  height: clamp(12rem, 33svh, 25rem);
   padding: 7px;
   border: 1px solid var(--hairline);
   background: var(--ivory);
@@ -584,7 +584,7 @@ p { margin: 0; }
   .page-home .site-header { padding-block: 0.7rem 0; }
   .page-home .hero-logo { max-width: calc(14svh * 3.18); }
   .page-home .hero-intro { font-size: 1.05rem; line-height: 1.45; margin-top: 0.4rem; }
-  .home-portrait { height: 12rem; }
+  .home-portrait { height: 14.5rem; }
   .home-visionary .short-rule { margin-block: 0.5rem 0.6rem; }
   .home-visionary p { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
   .home-visionary .btn { padding-block: 0.6rem; }
