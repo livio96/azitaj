@@ -7,39 +7,20 @@
    ========================================================= */
 
 :root {
-  /* Color */
-  --ivory:      #FBF9F5;  /* page background, clean warm white */
-  --stone:      #F3EEE6;  /* alternate section background */
-  --ink:        #26271F;  /* body text, near-black with an olive cast */
-  --olive:      #464A33;  /* headings, deepened logo green */
-  --sage:       #6E7255;  /* secondary text: subtitles, motto */
-  --gold:       #B48C4E;  /* accent: rules, borders, highlights */
-  --gold-deep:  #84612C;  /* gold used as text (passes contrast) */
-  --hairline:   #E2D9CA;  /* thin borders and dividers */
-  --muted:      #67655A;  /* captions, labels */
-  --night:      #23251D;  /* footer */
-
-  /* Type */
-  --font-display: "Cormorant Garamond", "Cormorant", Garamond, "Times New Roman", serif;
-  --font-caps:    "Cinzel", "Trajan Pro", "Cormorant Garamond", Georgia, serif;
-  --font-body:    "EB Garamond", Garamond, "Hoefler Text", Georgia, serif;
-
-  /* Scale */
-  --step--1: 0.82rem;                         /* labels */
-  --step-0:  clamp(1.125rem, 1rem + 0.35vw, 1.25rem);  /* body: 18 to 20px */
-  --step-1:  clamp(1.4rem, 1.2rem + 0.6vw, 1.7rem);    /* lead */
-  --step-2:  clamp(1.65rem, 1.3rem + 1.1vw, 2.25rem);  /* section titles */
-  --step-3:  clamp(2.2rem, 1.8rem + 1.4vw, 2.9rem);
+  /* Brand settings (colors, fonts, scales, photo crops) live in css/theme.css,
+     which the theme editor (editor.html) writes. Values below are derived. */
+  --step--1: calc(0.82rem * var(--label-scale));                                   /* labels */
+  --step-0:  calc(clamp(1.125rem, 1rem + 0.35vw, 1.25rem) * var(--text-scale));    /* body: 18 to 20px */
+  --step-1:  calc(clamp(1.4rem, 1.2rem + 0.6vw, 1.7rem) * var(--lead-scale));      /* lead */
+  --step-2:  calc(clamp(1.65rem, 1.3rem + 1.1vw, 2.25rem) * var(--title-scale));   /* section titles */
+  --step-3:  calc(clamp(2.2rem, 1.8rem + 1.4vw, 2.9rem) * var(--title-scale));
 
   /* Space */
   --space-xs: 0.5rem;
   --space-s:  1rem;
   --space-m:  1.75rem;
   --space-l:  3rem;
-  --space-xl: clamp(4rem, 9vw, 7.5rem);
-
-  --measure: 38rem;      /* ~65 characters at body size */
-  --page-max: 76rem;
+  --space-xl: calc(clamp(4rem, 9vw, 7.5rem) * var(--space-scale));
 
   color-scheme: light;   /* the brand is a single ivory look by design */
 }
@@ -59,7 +40,7 @@ body {
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
-  line-height: 1.72;
+  line-height: var(--line-height);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -95,7 +76,7 @@ p { margin: 0; }
   font-family: var(--font-caps);
   font-weight: 500;
   font-size: var(--step-2);
-  letter-spacing: 0.12em;
+  letter-spacing: var(--title-tracking);
   text-transform: uppercase;
   color: var(--olive);
   line-height: 1.25;
@@ -160,7 +141,7 @@ p { margin: 0; }
   color: var(--ink);
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: 0.88rem;
+  font-size: var(--button-size);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
@@ -180,7 +161,7 @@ p { margin: 0; }
 .nav a {
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: 0.86rem;
+  font-size: var(--menu-size);
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--ink);
@@ -196,7 +177,7 @@ p { margin: 0; }
 .header-motto {
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: 0.82rem;
+  font-size: calc(var(--menu-size) * 0.953488);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--sage);
@@ -213,7 +194,7 @@ p { margin: 0; }
   font-family: var(--font-display);
   font-style: italic;
   font-weight: 500;
-  font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.7rem);
+  font-size: calc(clamp(1.3rem, 1.1rem + 0.9vw, 1.7rem) * var(--lead-scale));
   line-height: 1.55;
   color: var(--ink);
   text-wrap: balance;
@@ -239,7 +220,7 @@ p { margin: 0; }
 .tile::after {
   content: "";
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(30, 28, 20, 0.78) 0%, rgba(30, 28, 20, 0.35) 35%, rgba(30, 28, 20, 0) 62%);
+  background: linear-gradient(to top, rgba(30, 28, 20, var(--tile-shade)) 0%, rgba(30, 28, 20, calc(var(--tile-shade) * 0.45)) 35%, rgba(30, 28, 20, 0) 62%);
 }
 .tile-label {
   position: absolute;
@@ -254,7 +235,7 @@ p { margin: 0; }
   border-bottom: 1px solid rgba(248, 245, 239, 0.6);
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  font-size: calc(clamp(1rem, 1.6vw, 1.3rem) * var(--label-scale));
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: #FBF9F5; /* always on a photo */
@@ -288,7 +269,7 @@ p { margin: 0; }
 .about { background: var(--stone); }
 .about-grid {
   display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, var(--about-photo-col)) minmax(0, 6fr);
   gap: clamp(2rem, 6vw, 5.5rem);
   align-items: start;
 }
@@ -328,7 +309,7 @@ p { margin: 0; }
   padding: var(--space-m) 0 0;
   border-top: 1px solid var(--hairline);
   font-family: var(--font-display);
-  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-size: calc(clamp(1.4rem, 2.6vw, 1.9rem) * var(--lead-scale));
   line-height: 1.35;
   color: var(--ink);
   text-wrap: balance;
@@ -338,8 +319,8 @@ p { margin: 0; }
 /* Effortless Living */
 .living { background: var(--stone); }
 .living-grid { display: grid; gap: clamp(2rem, 5vw, 4rem); }
-.living-image { margin: 0; aspect-ratio: 2 / 1; overflow: hidden; max-width: 100%; }
-.living-image img { width: 100%; height: 100%; object-fit: cover; }
+.living-image { margin: 0; aspect-ratio: var(--living-ratio); overflow: hidden; max-width: 100%; }
+.living-image img { width: 100%; height: 100%; object-fit: cover; object-position: center var(--living-crop); }
 .living-text { min-width: 0; max-width: var(--measure); margin-inline: auto; }
 
 /* Residences */
@@ -357,7 +338,7 @@ p { margin: 0; }
   gap: clamp(0.75rem, 2vw, 1.5rem);
 }
 .gallery figure { margin: 0; }
-.gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; max-width: 100%; }
+.gallery img { width: 100%; aspect-ratio: var(--gallery-ratio); object-fit: cover; max-width: 100%; }
 .gallery figcaption {
   margin-top: 0.85rem;
   font-family: var(--font-caps);
@@ -370,7 +351,7 @@ p { margin: 0; }
 .gallery-note {
   margin-top: var(--space-m);
   font-style: italic;
-  font-size: 0.95rem;
+  font-size: calc(0.95rem * var(--text-scale));
   color: var(--muted);
 }
 .residences-cta { margin-top: var(--space-l); }
@@ -409,7 +390,7 @@ p { margin: 0; }
 .field label {
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: 0.8rem;
+  font-size: calc(0.8rem * var(--label-scale));
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--olive);
@@ -436,19 +417,19 @@ p { margin: 0; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 
 /* Footer */
-.site-footer { background: var(--night); color: var(--stone); padding-block: var(--space-l); }
+.site-footer { background: var(--night); color: var(--footer-text); padding-block: var(--space-l); }
 .footer-inner { display: grid; justify-items: center; gap: var(--space-m); text-align: center; }
 .footer-mark { width: 3.5rem; }
 .footer-contact {
   list-style: none; margin: 0; padding: 0;
   display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 2.5rem;
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--text-scale));
 }
-.footer-contact a { color: var(--stone); text-decoration: none; }
-.footer-contact a:hover { color: #D9BE8C; }
+.footer-contact a { color: var(--footer-text); text-decoration: none; }
+.footer-contact a:hover { color: var(--gold); }
 .footer-legal {
-  font-family: var(--font-caps); font-size: 0.7rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: #A9A68F;
+  font-family: var(--font-caps); font-size: calc(0.7rem * var(--label-scale)); letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--footer-text); opacity: 0.62;
 }
 
 /* ---------- Header monogram (inner pages) ---------- */
@@ -484,24 +465,24 @@ p { margin: 0; }
 }
 .home-portrait {
   display: block;
-  height: clamp(12rem, 33svh, 25rem);
+  height: calc(clamp(12rem, 33svh, 25rem) * var(--home-portrait-scale));
   padding: 7px;
   border: 1px solid var(--hairline);
   background: var(--ivory);
   overflow: hidden;
 }
-.home-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 3%; transition: transform 0.8s ease; }
+.home-portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center var(--home-portrait-crop); transition: transform 0.8s ease; }
 .home-portrait:hover img { transform: scale(1.03); }
 .home-visionary { max-width: 32rem; }
 .home-visionary .short-rule { margin-block: 0.8rem 1rem; }
-.home-visionary p { font-size: clamp(1rem, 0.85rem + 0.7vh, 1.15rem); line-height: 1.6; margin-bottom: clamp(0.9rem, 2.2vh, 1.5rem); }
-.page-home .home-visionary .eyebrow-title { font-size: clamp(1.15rem, 0.9rem + 1vh, 1.5rem); }
+.home-visionary p { font-size: calc(clamp(1rem, 0.85rem + 0.7vh, 1.15rem) * var(--text-scale)); line-height: 1.6; margin-bottom: clamp(0.9rem, 2.2vh, 1.5rem); }
+.page-home .home-visionary .eyebrow-title { font-size: calc(clamp(1.15rem, 0.9rem + 1vh, 1.5rem) * var(--title-scale)); }
 /* logo scales with the window height so tiles always fit below it */
-.page-home .hero-logo { max-width: min(56rem, calc(16.5svh * 3.18)); }
+.page-home .hero-logo { max-width: calc(min(56rem, 16.5svh * 3.18) * var(--home-logo-scale)); }
 .page-home .hero-intro {
   max-width: 48rem;
   margin-top: clamp(0.5rem, 2vh, 1.25rem);
-  font-size: clamp(1.1rem, 0.9rem + 1.1vh, 1.5rem);
+  font-size: calc(clamp(1.1rem, 0.9rem + 1.1vh, 1.5rem) * var(--lead-scale));
 }
 
 .page-home .tiles {
@@ -513,19 +494,19 @@ p { margin: 0; }
 /* image fills the tile without pushing its height */
 .page-home .tile img { position: absolute; inset: 0; }
 .tile-portrait img { object-position: center 25%; }
-.page-home .tile-label { font-size: clamp(0.9rem, 1.25vw, 1.15rem); }
+.page-home .tile-label { font-size: calc(clamp(0.9rem, 1.25vw, 1.15rem) * var(--label-scale)); }
 
 .home-contact { border-top: 1px solid var(--hairline); padding-block: 1rem; }
 .home-contact-inner {
   display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
   gap: 0.5rem clamp(1rem, 3vw, 2.5rem);
-  font-family: var(--font-display); font-size: 1.15rem;
+  font-family: var(--font-display); font-size: calc(1.15rem * var(--lead-scale));
 }
 .home-contact a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
 .home-contact a:hover { border-bottom-color: var(--gold); }
 .home-contact .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
 .home-contact-cta {
-  font-family: var(--font-caps); font-size: 0.82rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-family: var(--font-caps); font-size: calc(var(--menu-size) * 0.953488); letter-spacing: 0.2em; text-transform: uppercase;
 }
 .home-contact-cta:hover .arrow { transform: translateX(4px); }
 
@@ -535,7 +516,7 @@ p { margin: 0; }
 .page-next-link { display: inline-grid; justify-items: center; text-decoration: none; color: var(--olive); }
 .page-next-title {
   font-family: var(--font-caps); font-weight: 500; font-size: var(--step-2);
-  letter-spacing: 0.12em; text-transform: uppercase;
+  letter-spacing: var(--title-tracking); text-transform: uppercase;
 }
 .page-next-link:hover .arrow { transform: translateX(6px); }
 .page-next-link:hover { color: var(--gold-deep); }
@@ -551,10 +532,10 @@ p { margin: 0; }
   width: calc(min(100%, var(--page-max)) - 2 * max(16px, 4vw));
   max-width: 100%;
   margin: clamp(0.5rem, 2vw, 1.5rem) auto 0;
-  aspect-ratio: 2 / 1;
+  aspect-ratio: var(--banner-ratio);
   overflow: hidden;
 }
-.page-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center 50%; }
+.page-banner img { width: 100%; height: 100%; object-fit: cover; object-position: center var(--banner-crop); }
 .page-banner + .section { padding-top: clamp(3rem, 7vw, 6rem); }
 
 .approach-detail { margin: var(--space-l) 0 0; aspect-ratio: 4 / 3; overflow: hidden; max-width: 100%; }
@@ -590,17 +571,17 @@ p { margin: 0; }
   .home-intro-grid { grid-template-columns: minmax(0, 1fr); }
   .home-portrait { height: auto; aspect-ratio: 4 / 3; }
   .home-intro::before { display: none; }
-  .page-home .hero-intro { font-size: 1.1rem; }
+  .page-home .hero-intro { font-size: calc(1.1rem * var(--lead-scale)); }
   .home-contact .dot:last-of-type { display: none; }
   .home-contact-cta { flex-basis: 100%; text-align: center; }
-  .page-home .tile-label { font-size: 0.8rem; letter-spacing: 0.1em; }
+  .page-home .tile-label { font-size: calc(0.8rem * var(--label-scale)); letter-spacing: 0.1em; }
   .header-mark { display: none; }
   .gallery { grid-template-columns: minmax(0, 1fr); gap: var(--space-m); }
   .figure-pair { grid-template-columns: minmax(0, 1fr); }
-  .page-banner { aspect-ratio: 3 / 2; }
+  .page-banner { aspect-ratio: min(var(--banner-ratio), 1.5); }
   .nav { flex-wrap: wrap; justify-content: center; gap: 0.25rem 1.25rem; }
-  .living-image { aspect-ratio: 16 / 9; }
-  .btn { font-size: 0.75rem; letter-spacing: 0.14em; gap: 0.75rem; padding-inline: 1.2rem; }
+  .living-image { aspect-ratio: min(var(--living-ratio), 1.777778); }
+  .btn { font-size: calc(var(--button-size) * 0.852273); letter-spacing: 0.14em; gap: 0.75rem; padding-inline: 1.2rem; }
   .field-row { grid-template-columns: minmax(0, 1fr); }
   .portrait::before { inset: 10px -10px -10px 10px; }
   .visionary { text-align: left; }
@@ -610,11 +591,11 @@ p { margin: 0; }
 /* Short laptop screens: tighten the home page so it still fits one screen */
 @media (min-width: 721px) and (max-height: 800px) {
   .page-home .site-header { padding-block: 0.7rem 0; }
-  .page-home .hero-logo { max-width: calc(14svh * 3.18); }
-  .page-home .hero-intro { font-size: 1.05rem; line-height: 1.45; margin-top: 0.4rem; }
-  .home-portrait { height: 14.5rem; }
+  .page-home .hero-logo { max-width: calc(14svh * 3.18 * var(--home-logo-scale)); }
+  .page-home .hero-intro { font-size: calc(1.05rem * var(--lead-scale)); line-height: 1.45; margin-top: 0.4rem; }
+  .home-portrait { height: calc(14.5rem * var(--home-portrait-scale)); }
   .home-visionary .short-rule { margin-block: 0.5rem 0.6rem; }
-  .home-visionary p { font-size: 0.98rem; line-height: 1.5; margin-bottom: 0.7rem; }
+  .home-visionary p { font-size: calc(0.98rem * var(--text-scale)); line-height: 1.5; margin-bottom: 0.7rem; }
   .home-visionary .btn { padding-block: 0.6rem; }
   .page-home .tiles { min-height: 9rem; }
   .home-contact { padding-block: 0.6rem; }

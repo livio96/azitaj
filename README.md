@@ -11,7 +11,9 @@ approach.html         The Approach
 living.html           Effortless Living
 residences.html       Residences gallery
 contact.html          Contact details + inquiry form
-css/styles.css        All styling. Brand colors and fonts are at the top under :root
+css/theme.css         Theme settings: colors, fonts, sizes, photo crops (written by the theme editor)
+css/styles.css        Layout and styling; reads its values from theme.css
+editor.html           Theme editor (not linked from the site, hidden from search engines)
 js/main.js            Small extras: form sending, nav highlight, footer year
 assets/logo/          Transparent logo, wordmark, J monogram, favicons
 assets/img/           Portrait, image tiles, social share card
@@ -29,12 +31,24 @@ Each tile opens its own page. Every inner page has the same top menu and a
 ## Common edits
 
 - **Text:** open the page's `.html` file and edit the words between the tags. Each section is labelled with a comment like `<!-- ============ ABOUT ME ============ -->`.
-- **Brand colors / fonts:** change the values at the top of `css/styles.css` (`--gold`, `--olive`, `--ivory`, etc.). Every section updates.
+- **Colors, fonts, sizes, photo crops:** use the theme editor (below) instead of editing CSS by hand.
 - **Swap an image:** replace the file in `assets/img/` and keep the same filename. Recommended sizes:
   - `azita-portrait.jpg`: portrait, about 1000 × 1250 px
   - `tile-coast-dunes.jpg`, `tile-arch-courtyard.jpg`, `tile-terrace-lounge.jpg`: landscape, at least 1800 × 1200 px
 
   The current tiles are cropped from the mockup and are low resolution. Replace them with real photos or renderings before launch.
+
+## Theme editor
+
+Open **azitaj.com/editor.html**. It's a private page: there are no links to it on the site, and it's hidden from search engines.
+
+1. Adjust colors, fonts, text sizes, spacing, the home page logo and portrait, and photo shapes and crops. The preview on the right updates as you go. Use **Page** and **Desktop / Tablet / Phone** to check each page.
+2. Changed settings get a gold dot. If a text color gets hard to read, a warning appears under it. **Undo** steps back, and **Reset to live site** throws away everything you changed.
+3. Your changes are kept in your browser if you close the tab. They aren't on the live site yet.
+4. Click **Download theme file**. That saves `theme.css`.
+5. Put it live: open https://github.com/livio96/azitaj/upload/main/css, drag `theme.css` in (rename it if your browser added a number), and click **Commit changes**. The site updates in 1–2 minutes; refresh with Ctrl + F5.
+
+To keep working on a saved version later, use **Open theme file…**. To undo a published theme, upload an older `theme.css`, or restore it from the repo history.
 
 ## Turn on the inquiry form (about 5 minutes)
 

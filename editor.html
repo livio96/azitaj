@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Theme Editor | Azita J</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png">
+  <style>
+    :root {
+      --bg: #F4F1EB; --panel: #FFFFFF; --ink: #23241D; --soft: #6B6A60; --line: #E3DED3;
+      --accent: #464A33; --accent-ink: #FFFFFF; --warn-bg: #FBEFD9; --warn: #8A5A12; --ok: #3D6B3A;
+      --ui: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { font-family: var(--ui); font-size: 14px; color: var(--ink); background: var(--bg); display: grid; grid-template-rows: auto 1fr; }
+    button, select, input { font: inherit; color: inherit; }
+    :focus-visible { outline: 2px solid #B48C4E; outline-offset: 2px; }
+
+    /* Top bar */
+    .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 10px 16px; background: var(--panel); border-bottom: 1px solid var(--line); }
+    .bar h1 { font-size: 15px; margin: 0 8px 0 0; font-weight: 600; letter-spacing: .02em; }
+    .bar h1 span { color: var(--soft); font-weight: 400; }
+    .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+    .seg button { border: 0; background: transparent; padding: 6px 12px; cursor: pointer; }
+    .seg button + button { border-left: 1px solid var(--line); }
+    .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+    .bar label.inline { display: inline-flex; align-items: center; gap: 6px; color: var(--soft); }
+    .bar select { padding: 6px 8px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    .spacer { flex: 1; }
+    .btn { border: 1px solid var(--line); background: #fff; border-radius: 8px; padding: 7px 12px; cursor: pointer; white-space: nowrap; }
+    .btn:hover { border-color: #C9C2B3; }
+    .btn:disabled { opacity: .45; cursor: default; }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+    .btn.primary:hover { background: #33361f; }
+
+    /* Layout */
+    .main { display: grid; grid-template-columns: 360px minmax(0, 1fr); min-height: 0; }
+    .controls { overflow-y: auto; background: var(--panel); border-right: 1px solid var(--line); padding: 4px 0 40px; }
+    .preview-wrap { position: relative; overflow: hidden; display: grid; place-items: start center; padding: 16px; }
+    .stage { position: relative; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 8px 24px rgba(0,0,0,.08); transform-origin: top left; }
+    .stage iframe { display: block; border: 0; width: 100%; height: 100%; background: #fff; }
+    .note { margin: 12px 16px 0; padding: 10px 12px; border-radius: 8px; background: var(--warn-bg); color: var(--warn); line-height: 1.45; }
+    .note[hidden] { display: none; }
+    .note button { margin-left: 6px; }
+
+    /* Groups */
+    details { border-bottom: 1px solid var(--line); }
+    summary { list-style: none; cursor: pointer; padding: 14px 16px; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; color: var(--soft); font-weight: 400; font-size: 18px; }
+    details[open] summary::after { content: "–"; }
+    .group-body { padding: 0 16px 14px; display: grid; gap: 14px; }
+    .group-hint { color: var(--soft); margin: -4px 0 2px; line-height: 1.4; }
+
+    .ctl { display: grid; gap: 6px; }
+    .ctl-head { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+    .ctl-head label { font-weight: 500; }
+    .ctl-val { color: var(--soft); font-variant-numeric: tabular-nums; }
+    .ctl-sub { color: var(--soft); font-size: 12.5px; line-height: 1.35; }
+    .ctl input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .color-row { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 8px; align-items: center; }
+    .color-row input[type="color"] { width: 40px; height: 32px; padding: 0; border: 1px solid var(--line); border-radius: 6px; background: none; cursor: pointer; }
+    .color-row input[type="text"] { width: 100%; padding: 6px 8px; border: 1px solid var(--line); border-radius: 6px; font-family: ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; }
+    .ctl select { width: 100%; padding: 7px 8px; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+    .warn { color: var(--warn); font-size: 12.5px; }
+    .warn[hidden] { display: none; }
+    .changed .ctl-head label::after { content: " •"; color: #B48C4E; }
+
+    /* Dialog */
+    dialog { border: 0; border-radius: 12px; padding: 0; max-width: 520px; width: calc(100% - 32px); box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+    dialog::backdrop { background: rgba(20,20,15,.35); }
+    .dlg { padding: 22px 24px; line-height: 1.55; }
+    .dlg h2 { margin: 0 0 8px; font-size: 18px; }
+    .dlg ol { padding-left: 20px; margin: 10px 0; }
+    .dlg li { margin: 6px 0; }
+    .dlg code { background: #F1EEE6; padding: 1px 5px; border-radius: 4px; }
+    .dlg .actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; }
+
+    .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%); background: var(--ink); color: #fff; padding: 9px 14px; border-radius: 8px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+
+    @media (max-width: 900px) {
+      body { grid-template-rows: auto auto 1fr; }
+      .main { grid-template-columns: 1fr; grid-template-rows: 46vh 1fr; }
+      .controls { order: 2; border-right: 0; border-top: 1px solid var(--line); }
+      .preview-wrap { order: 1; padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <h1>Azita J <span>Theme Editor</span></h1>
+    <label class="inline">Page
+      <select id="page">
+        <option value="index.html">Home</option>
+        <option value="about.html">About Me</option>
+        <option value="approach.html">The Approach</option>
+        <option value="living.html">Effortless Living</option>
+        <option value="residences.html">Residences</option>
+        <option value="contact.html">Contact</option>
+      </select>
+    </label>
+    <div class="seg" role="group" aria-label="Preview size">
+      <button type="button" data-device="1440" aria-pressed="true">Desktop</button>
+      <button type="button" data-device="820" aria-pressed="false">Tablet</button>
+      <button type="button" data-device="390" aria-pressed="false">Phone</button>
+    </div>
+    <span class="spacer"></span>
+    <button class="btn" type="button" id="undo" disabled>Undo</button>
+    <button class="btn" type="button" id="reset">Reset to live site</button>
+    <button class="btn" type="button" id="open">Open theme file…</button>
+    <input type="file" id="file" accept=".css,text/css" hidden>
+    <button class="btn primary" type="button" id="download">Download theme file</button>
+  </header>
+
+  <div class="main">
+    <aside class="controls" id="controls" aria-label="Theme settings">
+      <p class="note" id="draft-note" hidden>
+        Your unsaved changes from last time are back.
+        <button class="btn" type="button" id="discard">Discard them</button>
+      </p>
+      <p class="note" id="load-note" hidden></p>
+    </aside>
+    <section class="preview-wrap" id="preview-wrap" aria-label="Preview">
+      <div class="stage" id="stage"><iframe id="frame" title="Site preview" src="index.html"></iframe></div>
+    </section>
+  </div>
+
+  <dialog id="done">
+    <div class="dlg">
+      <h2>Theme file downloaded</h2>
+      <p>The file is called <code>theme.css</code> and is in your Downloads folder. Your changes are only on this computer until the file is uploaded. To put it live:</p>
+      <ol>
+        <li>Open the <a href="https://github.com/livio96/azitaj/upload/main/css" target="_blank" rel="noopener">upload page for the site's css folder</a> (you need to be signed in to GitHub with access to the site).</li>
+        <li>Drag <code>theme.css</code> onto the page. If your browser renamed it (for example <code>theme (1).css</code>), rename it back to <code>theme.css</code> first.</li>
+        <li>Click <strong>Commit changes</strong>.</li>
+        <li>Wait 1–2 minutes, then refresh the site with <strong>Ctrl + F5</strong> (Mac: Cmd + Shift + R).</li>
+      </ol>
+      <p>Or send the file to whoever manages the site and they can upload it.</p>
+      <div class="actions"><button class="btn primary" type="button" id="done-close">Got it</button></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- Fonts on offer (all Google Fonts) ---------------- */
+  var FONTS = {
+    "Cinzel":             { spec: "wght@400;500", fallback: '"Trajan Pro", Georgia, serif' },
+    "Cormorant SC":       { spec: "wght@400;500", fallback: "Garamond, Georgia, serif" },
+    "Marcellus":          { spec: "", fallback: "Georgia, serif" },
+    "Forum":              { spec: "", fallback: "Georgia, serif" },
+    "Playfair Display":   { spec: "ital,wght@0,400;0,500;1,400", fallback: "Georgia, serif" },
+    "Bodoni Moda":        { spec: "ital,wght@0,400;0,500;1,400", fallback: "Didot, Georgia, serif" },
+    "Cormorant Garamond": { spec: "ital,wght@0,400;0,500;1,400;1,500", fallback: 'Garamond, "Times New Roman", serif' },
+    "EB Garamond":        { spec: "ital,wght@0,400;0,500;1,400;1,500", fallback: "Garamond, Georgia, serif" },
+    "Lora":               { spec: "ital,wght@0,400;0,500;1,400;1,500", fallback: "Georgia, serif" },
+    "Libre Baskerville":  { spec: "ital,wght@0,400;1,400", fallback: "Baskerville, Georgia, serif" },
+    "Crimson Pro":        { spec: "ital,wght@0,400;0,500;1,400", fallback: "Georgia, serif" },
+    "Source Serif 4":     { spec: "ital,wght@0,400;0,500;1,400", fallback: "Georgia, serif" },
+    "Jost":               { spec: "ital,wght@0,400;0,500;1,400", fallback: '"Helvetica Neue", Arial, sans-serif' },
+    "Montserrat":         { spec: "ital,wght@0,400;0,500;1,400", fallback: '"Helvetica Neue", Arial, sans-serif' },
+    "Lato":               { spec: "ital,wght@0,400;1,400", fallback: '"Helvetica Neue", Arial, sans-serif' }
+  };
+  var CAPS_FONTS = ["Cinzel", "Cormorant SC", "Marcellus", "Forum", "Playfair Display", "Bodoni Moda", "Jost", "Montserrat"];
+  var DISPLAY_FONTS = ["Cormorant Garamond", "Playfair Display", "Bodoni Moda", "Lora", "Libre Baskerville", "EB Garamond", "Crimson Pro"];
+  var BODY_FONTS = ["EB Garamond", "Lora", "Libre Baskerville", "Crimson Pro", "Source Serif 4", "Cormorant Garamond", "Jost", "Lato", "Montserrat"];
+
+  /* ---------------- Controls ----------------
+     type: color | font | range.  unit is appended to the stored value.
+     page: which page the preview jumps to when this control is used. */
+  var GROUPS = [
+    { title: "Colors", open: true, hint: "Click a swatch to pick a color, or type a hex code.", items: [
+      { v: "ivory", type: "color", label: "Page background" },
+      { v: "stone", type: "color", label: "Alternate section background", sub: "About, Effortless Living, the contact form" },
+      { v: "ink", type: "color", label: "Paragraph text", check: ["ivory", "stone"], min: 4.5 },
+      { v: "olive", type: "color", label: "Headings and dark buttons", check: ["ivory", "stone"], min: 4.5 },
+      { v: "sage", type: "color", label: "Subtitles and menu motto", check: ["ivory", "stone"], min: 3 },
+      { v: "gold", type: "color", label: "Accent lines and borders" },
+      { v: "gold-deep", type: "color", label: "Gold text and signature", check: ["ivory"], min: 3 },
+      { v: "hairline", type: "color", label: "Thin divider lines" },
+      { v: "muted", type: "color", label: "Small labels and notes", check: ["ivory", "stone"], min: 4.5 },
+      { v: "night", type: "color", label: "Footer background" },
+      { v: "footer-text", type: "color", label: "Footer text", check: ["night"], min: 4.5 }
+    ]},
+    { title: "Fonts", items: [
+      { v: "font-caps", type: "font", label: "Titles, menu and buttons", list: CAPS_FONTS },
+      { v: "font-display", type: "font", label: "Intros and quotes", list: DISPLAY_FONTS },
+      { v: "font-body", type: "font", label: "Paragraphs", list: BODY_FONTS }
+    ]},
+    { title: "Text sizes", hint: "100% is the original size.", items: [
+      { v: "text-scale", type: "range", label: "Paragraph text", min: 0.8, max: 1.3, step: 0.01, fmt: "pct" },
+      { v: "lead-scale", type: "range", label: "Intros and quotes", min: 0.8, max: 1.3, step: 0.01, fmt: "pct" },
+      { v: "title-scale", type: "range", label: "Section titles", min: 0.7, max: 1.4, step: 0.01, fmt: "pct" },
+      { v: "label-scale", type: "range", label: "Small labels and photo captions", min: 0.8, max: 1.3, step: 0.01, fmt: "pct" },
+      { v: "menu-size", type: "range", label: "Menu", min: 0.7, max: 1.1, step: 0.01, unit: "rem", fmt: "px" },
+      { v: "button-size", type: "range", label: "Buttons", min: 0.7, max: 1.1, step: 0.01, unit: "rem", fmt: "px" },
+      { v: "title-tracking", type: "range", label: "Letter spacing in titles", min: 0, max: 0.3, step: 0.01, unit: "em", fmt: "raw" },
+      { v: "line-height", type: "range", label: "Line spacing in paragraphs", min: 1.4, max: 2, step: 0.02, fmt: "raw" }
+    ]},
+    { title: "Spacing and width", items: [
+      { v: "space-scale", type: "range", label: "Space between sections", min: 0.5, max: 1.6, step: 0.05, fmt: "pct", page: "about.html" },
+      { v: "page-max", type: "range", label: "Overall page width", min: 60, max: 90, step: 1, unit: "rem", fmt: "px" },
+      { v: "measure", type: "range", label: "Text column width", min: 30, max: 46, step: 0.5, unit: "rem", fmt: "px", page: "approach.html" }
+    ]},
+    { title: "Home page", items: [
+      { v: "home-logo-scale", type: "range", label: "Logo size", min: 0.6, max: 1.3, step: 0.01, fmt: "pct", page: "index.html" },
+      { v: "home-portrait-scale", type: "range", label: "Portrait frame height", min: 0.7, max: 1.5, step: 0.01, fmt: "pct", page: "index.html", sub: "Taller frames can push the tiles below the bottom of the screen on laptops." },
+      { v: "home-portrait-crop", type: "range", label: "Portrait crop", min: 0, max: 100, step: 1, unit: "%", fmt: "crop", page: "index.html", sub: "Lower numbers show more of the top of the photo." },
+      { v: "tile-shade", type: "range", label: "Shading behind tile labels", min: 0, max: 1, step: 0.01, fmt: "pct", page: "index.html" }
+    ]},
+    { title: "Photos", items: [
+      { v: "banner-ratio", type: "range", label: "Top banner shape", min: 1.4, max: 3, step: 0.05, fmt: "ratio", page: "approach.html", sub: "The Approach page. Higher numbers make a wider, shorter strip." },
+      { v: "banner-crop", type: "range", label: "Top banner crop", min: 0, max: 100, step: 1, unit: "%", fmt: "crop", page: "approach.html" },
+      { v: "living-ratio", type: "range", label: "Effortless Living photo shape", min: 1.2, max: 3, step: 0.05, fmt: "ratio", page: "living.html" },
+      { v: "living-crop", type: "range", label: "Effortless Living photo crop", min: 0, max: 100, step: 1, unit: "%", fmt: "crop", page: "living.html" },
+      { v: "gallery-ratio", type: "range", label: "Residences gallery photo shape", min: 1, max: 1.8, step: 0.01, fmt: "ratio", page: "residences.html" },
+      { v: "about-photo-col", type: "range", label: "About page portrait width", min: 3, max: 8, step: 0.5, unit: "fr", fmt: "col", page: "about.html", sub: "Compared with the text column." }
+    ]}
+  ];
+
+  var ITEMS = {};
+  GROUPS.forEach(function (g) { g.items.forEach(function (it) { ITEMS[it.v] = it; }); });
+
+  /* ---------------- State ---------------- */
+  var published = {};   // values from the live css/theme.css
+  var state = {};       // current values (strings, as written in CSS)
+  var history = [];
+  var DRAFT_KEY = "azitaj-theme-draft-v1";
+
+  function store(key, val) { try { if (val == null) localStorage.removeItem(key); else localStorage.setItem(key, val); } catch (e) {} }
+  function load(key) { try { return localStorage.getItem(key); } catch (e) { return null; } }
+
+  function parseTheme(css) {
+    var out = {};
+    var root = css.match(/:root\s*\{([\s\S]*?)\}/);
+    var body = root ? root[1] : css;
+    var re = /--([a-z0-9-]+)\s*:\s*([^;]+);/gi, m;
+    while ((m = re.exec(body))) out[m[1]] = m[2].trim();
+    return out;
+  }
+  function fontName(stack) {
+    var m = /^\s*["']([^"']+)["']/.exec(stack || "");
+    return m ? m[1] : (stack || "").split(",")[0].trim();
+  }
+  function fontStack(name) {
+    var f = FONTS[name];
+    return '"' + name + '", ' + (f ? f.fallback : "Georgia, serif");
+  }
+  function fontsUrl(names) {
+    var seen = {}, fams = [];
+    names.forEach(function (n) {
+      if (!n || seen[n]) return; seen[n] = 1;
+      var f = FONTS[n], fam = "family=" + n.replace(/ /g, "+");
+      if (f && f.spec) fam += ":" + f.spec;
+      fams.push(fam);
+    });
+    return "https://fonts.googleapis.com/css2?" + fams.join("&") + "&display=swap";
+  }
+  function currentFonts() { return [fontName(state["font-caps"]), fontName(state["font-display"]), fontName(state["font-body"])]; }
+  function num(v) { return parseFloat(v); }
+
+  /* ---------------- Color helpers ---------------- */
+  function hexOk(h) { return /^#[0-9a-f]{6}$/i.test(h); }
+  function lum(h) {
+    var c = [1, 3, 5].map(function (i) { var x = parseInt(h.substr(i, 2), 16) / 255; return x <= 0.03928 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function contrast(a, b) { if (!hexOk(a) || !hexOk(b)) return 21; var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+
+  /* ---------------- Build the controls ---------------- */
+  var controlsEl = document.getElementById("controls");
+  var inputs = {};
+
+  function fmtVal(it, raw) {
+    var n = num(raw);
+    switch (it.fmt) {
+      case "pct": return Math.round(n * 100) + "%";
+      case "px": return Math.round(n * 16) + "px";
+      case "ratio": return n.toFixed(2) + " : 1";
+      case "crop": return Math.round(n) + "%" + (n <= 10 ? " (top)" : n >= 90 ? " (bottom)" : n > 40 && n < 60 ? " (middle)" : "");
+      case "col": return n + " : 6";
+      default: return String(+n.toFixed(2)) + (it.unit && it.unit !== "rem" ? it.unit : "");
+    }
+  }
+
+  GROUPS.forEach(function (g) {
+    var d = document.createElement("details");
+    if (g.open) d.open = true;
+    var s = document.createElement("summary"); s.textContent = g.title; d.appendChild(s);
+    var body = document.createElement("div"); body.className = "group-body";
+    if (g.hint) { var h = document.createElement("p"); h.className = "group-hint"; h.textContent = g.hint; body.appendChild(h); }
+    g.items.forEach(function (it) {
+      var wrap = document.createElement("div"); wrap.className = "ctl"; wrap.dataset.v = it.v;
+      var id = "c-" + it.v;
+      var head = document.createElement("div"); head.className = "ctl-head";
+      var lab = document.createElement("label"); lab.htmlFor = id; lab.textContent = it.label; head.appendChild(lab);
+      var val = document.createElement("span"); val.className = "ctl-val"; head.appendChild(val);
+      wrap.appendChild(head);
+      var refs = { wrap: wrap, val: val };
+
+      if (it.type === "color") {
+        var row = document.createElement("div"); row.className = "color-row";
+        var pick = document.createElement("input"); pick.type = "color"; pick.id = id; pick.setAttribute("aria-label", it.label);
+        var txt = document.createElement("input"); txt.type = "text"; txt.id = id + "-hex"; txt.maxLength = 7; txt.spellcheck = false; txt.setAttribute("aria-label", it.label + " hex code");
+        row.appendChild(pick); row.appendChild(txt); wrap.appendChild(row);
+        pick.addEventListener("input", function () { set(it.v, pick.value.toUpperCase(), true); });
+        pick.addEventListener("change", function () { commit(); });
+        txt.addEventListener("change", function () {
+          var v = txt.value.trim(); if (v[0] !== "#") v = "#" + v;
+          if (hexOk(v)) { set(it.v, v.toUpperCase()); commit(); } else { txt.value = state[it.v]; toast("Use a 6-digit hex code, like #26271F"); }
+        });
+        refs.pick = pick; refs.txt = txt;
+        var w = document.createElement("span"); w.className = "warn"; w.hidden = true; wrap.appendChild(w); refs.warn = w;
+      } else if (it.type === "font") {
+        var sel = document.createElement("select"); sel.id = id;
+        it.list.forEach(function (n) { var o = document.createElement("option"); o.value = n; o.textContent = n; sel.appendChild(o); });
+        sel.addEventListener("change", function () { set(it.v, fontStack(sel.value)); commit(); });
+        wrap.appendChild(sel); refs.sel = sel;
+      } else {
+        var r = document.createElement("input"); r.type = "range"; r.id = id; r.min = it.min; r.max = it.max; r.step = it.step;
+        r.addEventListener("input", function () { set(it.v, r.value + (it.unit || ""), true); });
+        r.addEventListener("change", function () { commit(); });
+        wrap.appendChild(r); refs.range = r;
+      }
+      if (it.sub) { var sub = document.createElement("span"); sub.className = "ctl-sub"; sub.textContent = it.sub; wrap.appendChild(sub); }
+      if (it.page) wrap.addEventListener("pointerdown", function () { goPage(it.page); }, true);
+      if (it.page) wrap.addEventListener("focusin", function () { goPage(it.page); });
+      inputs[it.v] = refs;
+      body.appendChild(wrap);
+    });
+    d.appendChild(body);
+    controlsEl.appendChild(d);
+  });
+
+  function syncControl(v) {
+    var it = ITEMS[v], r = inputs[v], val = state[v];
+    if (!it || !r || val == null) return;
+    if (it.type === "color") {
+      if (hexOk(val)) r.pick.value = val.toLowerCase();
+      if (document.activeElement !== r.txt) r.txt.value = val.toUpperCase();
+      r.val.textContent = "";
+    } else if (it.type === "font") {
+      var n = fontName(val);
+      if (![].some.call(r.sel.options, function (o) { return o.value === n; })) {
+        var o = document.createElement("option"); o.value = n; o.textContent = n; r.sel.appendChild(o);
+      }
+      r.sel.value = n; r.val.textContent = "";
+    } else {
+      r.range.value = num(val); r.val.textContent = fmtVal(it, val);
+    }
+    r.wrap.classList.toggle("changed", published[v] != null && String(published[v]).toUpperCase() !== String(val).toUpperCase());
+  }
+  function syncWarnings() {
+    Object.keys(ITEMS).forEach(function (v) {
+      var it = ITEMS[v], r = inputs[v];
+      if (!it.check || !r.warn) return;
+      var worst = Math.min.apply(null, it.check.map(function (bg) { return contrast(state[v], state[bg]); }));
+      r.warn.hidden = worst >= it.min;
+      r.warn.textContent = "Hard to read against the background (contrast " + worst.toFixed(1) + ", aim for " + it.min + "+).";
+    });
+  }
+
+  /* ---------------- Apply to preview ---------------- */
+  var frame = document.getElementById("frame");
+  function applyToFrame() {
+    var doc; try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.documentElement) return;
+    var root = doc.documentElement;
+    Object.keys(state).forEach(function (v) { root.style.setProperty("--" + v, state[v]); });
+    var link = doc.getElementById("theme-editor-fonts");
+    var url = fontsUrl(currentFonts());
+    if (!link) {
+      link = doc.createElement("link"); link.id = "theme-editor-fonts"; link.rel = "stylesheet";
+      (doc.head || root).appendChild(link);
+    }
+    if (link.getAttribute("href") !== url) link.setAttribute("href", url);
+    // keep clicks inside the preview on the site, and let the page picker follow
+    if (!doc.__azj) {
+      doc.__azj = true;
+      doc.addEventListener("click", function (e) {
+        var a = e.target.closest && e.target.closest("a[href]");
+        if (!a) return;
+        var href = a.getAttribute("href");
+        if (/^(https?:|mailto:|tel:)/.test(href)) { e.preventDefault(); toast("Links to other sites are turned off in the preview"); }
+      }, true);
+    }
+    var here = (frame.contentWindow.location.pathname.split("/").pop() || "index.html");
+    var pageSel = document.getElementById("page");
+    if ([].some.call(pageSel.options, function (o) { return o.value === here; })) pageSel.value = here;
+  }
+  frame.addEventListener("load", applyToFrame);
+
+  function set(v, value, live) {
+    state[v] = value;
+    syncControl(v);
+    if (ITEMS[v] && ITEMS[v].type === "color") syncWarnings();
+    applyToFrame();
+    if (!live) saveDraft();
+  }
+  var lastCommitted = null;
+  function commit() {
+    var snap = JSON.stringify(state);
+    if (lastCommitted && snap !== lastCommitted) { history.push(lastCommitted); if (history.length > 60) history.shift(); }
+    lastCommitted = snap;
+    document.getElementById("undo").disabled = history.length === 0;
+    saveDraft();
+  }
+  function setAll(obj) {
+    state = JSON.parse(JSON.stringify(obj));
+    Object.keys(ITEMS).forEach(syncControl);
+    syncWarnings();
+    applyToFrame();
+  }
+  function saveDraft() {
+    var same = Object.keys(ITEMS).every(function (v) { return String(published[v]).toUpperCase() === String(state[v]).toUpperCase(); });
+    store(DRAFT_KEY, same ? null : JSON.stringify(state));
+  }
+
+  /* ---------------- Page and device ---------------- */
+  function goPage(p) {
+    var here; try { here = frame.contentWindow.location.pathname.split("/").pop() || "index.html"; } catch (e) {}
+    if (here !== p) { frame.src = p; document.getElementById("page").value = p; }
+  }
+  document.getElementById("page").addEventListener("change", function (e) { frame.src = e.target.value; });
+
+  var deviceW = 1440;
+  var stage = document.getElementById("stage"), wrapEl = document.getElementById("preview-wrap");
+  function layout() {
+    var availW = wrapEl.clientWidth - 32, availH = wrapEl.clientHeight - 32;
+    if (window.matchMedia("(max-width: 900px)").matches) { availW = wrapEl.clientWidth - 16; availH = wrapEl.clientHeight - 16; }
+    var scale = Math.min(1, availW / deviceW);
+    stage.style.width = deviceW + "px";
+    stage.style.height = Math.max(200, availH / scale) + "px";
+    stage.style.transform = "scale(" + scale + ")";
+    stage.style.marginRight = (-(deviceW * (1 - scale))) + "px";
+    stage.style.marginBottom = (-(availH / scale) * (1 - scale)) + "px";
+  }
+  window.addEventListener("resize", layout);
+  [].forEach.call(document.querySelectorAll("[data-device]"), function (b) {
+    b.addEventListener("click", function () {
+      deviceW = +b.dataset.device;
+      [].forEach.call(document.querySelectorAll("[data-device]"), function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      layout();
+    });
+  });
+
+  /* ---------------- Buttons ---------------- */
+  document.getElementById("undo").addEventListener("click", function () {
+    if (!history.length) return;
+    var prev = history.pop(); lastCommitted = prev;
+    setAll(JSON.parse(prev)); saveDraft();
+    this.disabled = history.length === 0;
+  });
+  document.getElementById("reset").addEventListener("click", function () {
+    var btn = this;
+    if (btn.dataset.armed !== "1") {
+      btn.dataset.armed = "1"; btn.textContent = "Click again to reset";
+      setTimeout(function () { btn.dataset.armed = ""; btn.textContent = "Reset to live site"; }, 3500);
+      return;
+    }
+    btn.dataset.armed = ""; btn.textContent = "Reset to live site";
+    setAll(published); commit(); store(DRAFT_KEY, null);
+    document.getElementById("draft-note").hidden = true;
+    toast("Back to the live site's settings");
+  });
+  document.getElementById("discard").addEventListener("click", function () {
+    setAll(published); history = []; lastCommitted = JSON.stringify(state);
+    document.getElementById("undo").disabled = true;
+    store(DRAFT_KEY, null);
+    document.getElementById("draft-note").hidden = true;
+  });
+  document.getElementById("open").addEventListener("click", function () { document.getElementById("file").click(); });
+  document.getElementById("file").addEventListener("change", function (e) {
+    var f = e.target.files && e.target.files[0]; if (!f) return;
+    var rd = new FileReader();
+    rd.onload = function () {
+      var vals = parseTheme(String(rd.result));
+      var merged = JSON.parse(JSON.stringify(state)), n = 0;
+      Object.keys(ITEMS).forEach(function (v) { if (vals[v] != null) { merged[v] = vals[v]; n++; } });
+      if (!n) { toast("That file doesn't look like a theme file"); return; }
+      setAll(merged); commit(); toast("Opened " + f.name);
+    };
+    rd.readAsText(f);
+    e.target.value = "";
+  });
+
+  function buildCss() {
+    var L = [];
+    L.push("/* =========================================================");
+    L.push("   AZITA J — THEME SETTINGS");
+    L.push("   This file holds everything the theme editor (editor.html) controls.");
+    L.push("   To change the look, open /editor.html, adjust, download a new copy");
+    L.push("   of this file, and replace css/theme.css with it.");
+    L.push("   Saved " + new Date().toLocaleString());
+    L.push("   ========================================================= */");
+    L.push("");
+    L.push('@import url("' + fontsUrl(currentFonts()) + '");');
+    L.push("");
+    L.push(":root {");
+    GROUPS.forEach(function (g, i) {
+      if (i) L.push("");
+      L.push("  /* " + g.title + " */");
+      g.items.forEach(function (it) {
+        var line = "  --" + it.v + ": " + state[it.v] + ";";
+        L.push(line + new Array(Math.max(1, 52 - line.length)).join(" ") + " /* " + it.label + " */");
+      });
+    });
+    L.push("}");
+    return L.join("\n") + "\n";
+  }
+  document.getElementById("download").addEventListener("click", function () {
+    var blob = new Blob([buildCss()], { type: "text/css" });
+    var a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "theme.css";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(a.href); }, 4000);
+    var dlg = document.getElementById("done");
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", "");
+  });
+  document.getElementById("done-close").addEventListener("click", function () { var d = document.getElementById("done"); if (d.close) d.close(); else d.removeAttribute("open"); });
+
+  var tt;
+  function toast(msg) { var t = document.getElementById("toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(tt); tt = setTimeout(function () { t.classList.remove("show"); }, 2600); }
+
+  /* ---------------- Start ---------------- */
+  layout();
+  fetch("css/theme.css?nocache=" + Date.now(), { cache: "no-store" })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
+    .then(function (css) {
+      published = parseTheme(css);
+      var missing = Object.keys(ITEMS).filter(function (v) { return published[v] == null; });
+      if (missing.length) {
+        var n = document.getElementById("load-note"); n.hidden = false;
+        n.textContent = "Some settings were missing from the live theme file (" + missing.join(", ") + "). Download a new theme file to add them.";
+      }
+      var start = JSON.parse(JSON.stringify(published));
+      var draft = load(DRAFT_KEY);
+      if (draft) {
+        try { var d = JSON.parse(draft); Object.keys(d).forEach(function (k) { if (ITEMS[k]) start[k] = d[k]; }); document.getElementById("draft-note").hidden = false; } catch (e) {}
+      }
+      setAll(start);
+      lastCommitted = JSON.stringify(state);
+    })
+    .catch(function () {
+      var n = document.getElementById("load-note"); n.hidden = false;
+      n.textContent = "Couldn't load the live theme file. Open this editor from the website (azitaj.com/editor.html), not from a saved copy.";
+    });
+})();
+</script>
+</body>
+</html>
