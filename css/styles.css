@@ -155,25 +155,26 @@ p { margin: 0; }
 .btn-solid:hover { background: var(--ink); border-color: var(--ink); }
 
 /* ---------- Header ---------- */
-.site-header { padding-block: 0.9rem 0.6rem; }
+.site-header { padding-block: 1rem 0.4rem; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
 
 /* Brand: the script J and the wordmark */
-.brand { display: flex; align-items: center; gap: 1.1rem; text-decoration: none; color: var(--ink); flex: none; }
+.brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--ink); flex: none; }
 .brand-mark {
   font-family: var(--font-mark);
-  font-size: calc(4.4rem * var(--home-logo-scale));
+  font-size: calc(6.5rem * var(--home-logo-scale));
   line-height: 1;
-  margin-top: -0.9rem;
+  margin-top: -0.5rem;
   color: var(--ink);
 }
 .brand-name {
   font-family: var(--font-caps);
   font-weight: 500;
-  font-size: calc(1.55rem * var(--home-logo-scale));
-  letter-spacing: 0.3em;
+  font-size: calc(2.1rem * var(--home-logo-scale));
+  letter-spacing: 0.28em;
   text-transform: uppercase;
   line-height: 1;
+  margin-top: 0.35rem;
 }
 
 .nav { display: flex; align-items: center; flex-wrap: wrap; justify-content: flex-end; gap: 0.25rem clamp(1rem, 2.2vw, 1.9rem); }
@@ -620,8 +621,8 @@ p { margin: 0; }
   .home-portrait { min-height: 0; aspect-ratio: 4 / 3; }
   .page-home .tile-label { font-size: calc(0.9rem * var(--label-scale)); letter-spacing: 0.1em; }
   .header-inner { flex-direction: column; gap: 0.75rem; }
-  .brand-mark { font-size: 3.4rem; }
-  .brand-name { font-size: 1.2rem; }
+  .brand-mark { font-size: 4.2rem; margin-top: -0.9rem; }
+  .brand-name { font-size: 1.4rem; }
   .header-mark { display: none; }
   .gallery { grid-template-columns: minmax(0, 1fr); gap: var(--space-m); }
   .figure-pair { grid-template-columns: minmax(0, 1fr); }
