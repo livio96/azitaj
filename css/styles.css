@@ -159,6 +159,8 @@ p { margin: 0; }
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
 
 /* Brand: the script J and the wordmark */
+/* Image logo (bronze artwork) — height set here, width follows */
+.brand-image img { display: block; width: auto; height: calc(6.2rem * var(--home-logo-scale)); margin-block: -0.3rem; }
 .brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--ink); flex: none; }
 .brand-mark {
   font-family: var(--font-mark);
@@ -623,6 +625,7 @@ p { margin: 0; }
   .page-home .tile-label { font-size: calc(0.9rem * var(--label-scale)); letter-spacing: 0.1em; }
   .header-inner { flex-direction: column; gap: 0.75rem; }
   .brand-mark { font-size: 4.2rem; padding-left: 0.8rem; }
+  .brand-image img { height: 4rem; }
   .brand-name { font-size: 1.4rem; }
   .header-mark { display: none; }
   .gallery { grid-template-columns: minmax(0, 1fr); gap: var(--space-m); }
