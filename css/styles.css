@@ -599,8 +599,8 @@ p { margin: 0; }
   .home { grid-template-columns: minmax(0, 1fr); gap: 2rem; padding-bottom: 2.5rem; }
   .home-words, .home-pictures { grid-template-rows: none; }
   .home-hero { padding-bottom: 0.5rem; }
-  .home-visionary { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
-  .home-portrait { min-height: 18rem; }
+  .home-visionary { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: start; overflow: visible; }
+  .home-portrait { min-height: 0; height: auto; aspect-ratio: 3 / 4; align-self: start; }
   .home-feature { aspect-ratio: 3 / 2; }
   .page-home .tiles { aspect-ratio: auto; }
   .page-home .tile { aspect-ratio: 4 / 3; }
@@ -621,7 +621,7 @@ p { margin: 0; }
   .page-home .tiles { grid-template-columns: minmax(0, 1fr); min-height: 0; }
   .page-home .tile { aspect-ratio: 16 / 9; }
   .home-visionary { grid-template-columns: minmax(0, 1fr); }
-  .home-portrait { min-height: 0; aspect-ratio: 4 / 3; }
+  .home-portrait { aspect-ratio: 4 / 3; }
   .page-home .tile-label { font-size: calc(0.9rem * var(--label-scale)); letter-spacing: 0.1em; }
   .header-inner { flex-direction: column; gap: 0.75rem; }
   .brand-mark { font-size: 4.2rem; padding-left: 0.8rem; }
