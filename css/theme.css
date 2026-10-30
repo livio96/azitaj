@@ -5,47 +5,49 @@
    of this file, and replace css/theme.css with it.
    ========================================================= */
 
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Jost:wght@400;500&family=Pinyon+Script&display=swap");
 
 :root {
-  /* Colors */
-  --ivory: #FBF9F5;       /* Page background */
-  --stone: #F3EEE6;       /* Alternate section background */
-  --ink: #26271F;         /* Body text */
-  --olive: #464A33;       /* Headings */
-  --sage: #6E7255;        /* Subtitles and motto */
-  --gold: #B48C4E;        /* Accent lines and borders */
-  --gold-deep: #84612C;   /* Gold text and signature */
-  --hairline: #E2D9CA;    /* Thin dividers */
-  --muted: #67655A;       /* Small labels and notes */
-  --night: #23251D;       /* Footer background */
-  --footer-text: #F3EEE6; /* Footer text */
+  /* Colors — "Dune & Harbor": warm white ground, near-black ink, one sea-blue accent */
+  --ivory: #F7F4EE;       /* Page background */
+  --stone: #E8E1D5;       /* Alternate section background */
+  --ink: #171A1D;         /* Body text */
+  --olive: #171A1D;       /* Headings */
+  --sage: #4E5558;        /* Subtitles and motto */
+  --gold: #171A1D;        /* Accent lines and borders */
+  --gold-deep: #1F3A44;   /* Accent text, links and the Inquire button */
+  --hairline: #D9D1C4;    /* Thin dividers */
+  --muted: #4E5558;       /* Small labels and notes */
+  --night: #1F3A44;       /* Footer background */
+  --footer-text: #F7F4EE; /* Footer text */
 
   /* Fonts */
-  --font-caps: "Cinzel", "Trajan Pro", Georgia, serif;                       /* Titles, menu, buttons */
+  --font-caps: "Cinzel", "Trajan Pro", Georgia, serif;                       /* Wordmark and titles */
   --font-display: "Cormorant Garamond", Garamond, "Times New Roman", serif;  /* Intros and quotes */
   --font-body: "EB Garamond", Garamond, Georgia, serif;                      /* Paragraphs */
+  --font-ui: "Jost", "Helvetica Neue", Arial, sans-serif;                    /* Menu, buttons, photo labels */
+  --font-mark: "Pinyon Script", "Brush Script MT", cursive;                  /* The J monogram */
 
   /* Text sizes (1 = original size) */
-  --text-scale: 1;        /* Paragraph text */
-  --lead-scale: 1;        /* Intros and quotes */
-  --title-scale: 1;       /* Section titles */
-  --label-scale: 1;       /* Small labels and photo captions */
-  --menu-size: 0.86rem;   /* Menu */
-  --button-size: 0.88rem; /* Buttons */
+  --text-scale: 1.15;     /* Paragraph text */
+  --lead-scale: 1.1;      /* Intros and quotes */
+  --title-scale: 1.2;     /* Section titles */
+  --label-scale: 1.15;    /* Small labels and photo captions */
+  --menu-size: 1rem;      /* Menu */
+  --button-size: 1.05rem; /* Buttons */
   --title-tracking: 0.12em; /* Letter spacing in titles */
-  --line-height: 1.72;    /* Line spacing in paragraphs */
+  --line-height: 1.55;    /* Line spacing in paragraphs */
 
   /* Spacing and width */
   --space-scale: 1;       /* Space between sections */
-  --page-max: 76rem;      /* Overall page width */
-  --measure: 38rem;       /* Text column width */
+  --page-max: 82rem;      /* Overall page width (inner pages) */
+  --measure: 40rem;       /* Text column width */
 
   /* Home page */
-  --home-logo-scale: 1;       /* Logo size */
-  --home-portrait-scale: 1;   /* Portrait frame height */
-  --home-portrait-crop: 3%;   /* Portrait crop: 0% shows the top of the photo */
-  --tile-shade: 0.78;         /* Shading behind the tile labels */
+  --home-logo-scale: 1;       /* Header J size */
+  --home-portrait-scale: 1;   /* Portrait width (share of the Visionary block) */
+  --home-portrait-crop: 10%;  /* Portrait crop: 0% shows the top of the photo */
+  --tile-shade: 0.84;         /* Shading behind the tile labels */
 
   /* Photos */
   --banner-ratio: 2;          /* Top banner shape (width ÷ height) */
