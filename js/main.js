@@ -1,4 +1,4 @@
-/* Azita J — small enhancements. The site works without this file. */
+/* AzitaJ — small enhancements. The site works without this file. */
 (function () {
   // Footer year
   var y = document.getElementById("year");
@@ -45,7 +45,7 @@
     }).then(function (res) {
       if (res.ok && String(res.data.success) === "true") {
         form.reset();
-        say("Thank you. Your inquiry has been sent and Azita will be in touch.");
+        say("Thank you. Your inquiry has been sent and AzitaJ will be in touch.");
       } else {
         say("The message didn't go through. Please email info@azitaj.com directly.", true);
       }
