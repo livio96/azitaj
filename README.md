@@ -65,3 +65,7 @@ Pick any one of these:
 ## Figma
 
 To bring the page into Figma, use the free **html.to.design** plugin. Import from the live URL once it's published, or upload the `site` folder as a zip.
+
+## Structured data (JSON-LD)
+
+Every page carries the same `@graph` in its `<head>`: a `WebSite`, a `Person` (Azita J) and the page itself (`WebPage`, `AboutPage`, `ContactPage`, or `ProfilePage` for `/profile`). Everything in it must match text that is visible on the site. If the biography, contact details or titles change, update the JSON-LD on all pages to match. `robots.txt` explicitly welcomes search and AI retrieval crawlers.

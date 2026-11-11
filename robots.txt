@@ -1,3 +1,23 @@
+# AzitaJ.com: all public pages are open to search engines and AI search/retrieval crawlers.
+# Nothing on this site is blocked.
+
+# Search engines
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: DuckDuckBot
+User-agent: Applebot
+Allow: /
+
+# AI search and answer engines (retrieval crawlers)
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+Allow: /
+
+# Everyone else
 User-agent: *
 Allow: /
 

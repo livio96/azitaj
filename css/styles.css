@@ -673,3 +673,4 @@ p { margin: 0; }
 /* Discreet footer link */
 .footer-legal a { color: inherit; text-decoration: none; }
 .footer-legal a:hover, .footer-legal a:focus-visible { color: var(--gold); text-decoration: underline; text-underline-offset: 0.25em; }
+.profile-note { margin-top: var(--space-m); font-size: calc(0.95rem * var(--text-scale)); color: var(--olive); }
