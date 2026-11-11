@@ -35,25 +35,22 @@
     });
     if (!ok) { say("Please add your name and a valid email address.", true); return; }
 
-    if (form.action.indexOf("YOUR_FORM_ID") !== -1) {
-      say("The form isn't connected yet. Please email Azita@azitaj.com or call 516-660-9100.", true);
-      return;
-    }
-
     say("Sending…");
     fetch(form.action, {
       method: "POST",
       body: new FormData(form),
       headers: { Accept: "application/json" }
     }).then(function (r) {
-      if (r.ok) {
+      return r.json().then(function (d) { return { ok: r.ok, data: d }; });
+    }).then(function (res) {
+      if (res.ok && String(res.data.success) === "true") {
         form.reset();
         say("Thank you. Your inquiry has been sent and Azita will be in touch.");
       } else {
-        say("The message didn't go through. Please email Azita@azitaj.com directly.", true);
+        say("The message didn't go through. Please email info@azitaj.com directly.", true);
       }
     }).catch(function () {
-      say("The message didn't go through. Please check your connection or email Azita@azitaj.com.", true);
+      say("The message didn't go through. Please check your connection or email info@azitaj.com.", true);
     });
   });
 })();

@@ -5,11 +5,11 @@ A small multi-page website in plain HTML and CSS. It doesn't use a framework or 
 ## Files
 
 ```
-index.html            Home: one screen — logo, portrait + Visionary Approach, three tiles linking to the pages below
+index.html            Home: one screen — logo and descriptor, portrait + Visionary Approach, three tiles linking to the pages below
 about.html            A Visionary Approach + About Me
 approach.html         The Approach
 living.html           Effortless Living
-residences.html       Residences gallery
+selections.html       Selections gallery (selected projects)
 contact.html          Contact details + inquiry form
 css/theme.css         Theme settings: colors, fonts, sizes, photo crops (written by the theme editor)
 css/styles.css        Layout and styling; reads its values from theme.css
@@ -23,10 +23,10 @@ assets/img/           Portrait, image tiles, social share card
 
 The home page fits in one screen on desktop: logo and intro line, then two
 blocks on top (framed portrait + "A Visionary Approach" with an About Me button)
-and three image tiles below (Residences, The Approach, Effortless Living),
+and three image tiles below (Selections, The Approach, Effortless Living),
 then a contact strip.
 Each tile opens its own page. Every inner page has the same top menu and a
-"Continue" link to the next page: About → Approach → Living → Residences → Contact.
+"Continue" link to the next page: About → Approach → Living → Selections → Contact.
 
 ## Common edits
 
@@ -50,13 +50,9 @@ Open **azitaj.com/editor.html**. It's a private page: there are no links to it o
 
 To keep working on a saved version later, use **Open theme file…**. To undo a published theme, upload an older `theme.css`, or restore it from the repo history.
 
-## Turn on the inquiry form (about 5 minutes)
+## Inquiry form
 
-1. Go to https://formspree.io, sign up with Azita@azitaj.com, and create a new form.
-2. Copy the form ID (it looks like `xayzabcd`).
-3. In `contact.html`, replace `YOUR_FORM_ID` in `action="https://formspree.io/f/YOUR_FORM_ID"` with that ID.
-
-Until this is done, the form tells visitors to email or call instead.
+The form on `contact.html` sends to info@azitaj.com through FormSubmit (free, no account). The first time anyone submits it, FormSubmit emails an activation link to info@azitaj.com. Click it once and every later inquiry arrives in that inbox. Until then, visitors see a message asking them to email info@azitaj.com directly.
 
 ## Publish
 

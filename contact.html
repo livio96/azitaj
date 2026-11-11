@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Contact | Azita J</title>
-  <meta name="description" content="Inquire about available residences or arrange a private viewing with Azita J.">
+  <meta name="description" content="Contact Azita J by email or telephone.">
   <meta property="og:title" content="Azita J">
-  <meta property="og:description" content="The art of bringing a vision to life. Residences now available.">
+  <meta property="og:description" content="The art of bringing a vision to life.">
   <meta property="og:image" content="assets/img/share-card.jpg">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logo/favicon-32.png?v=20261030">
@@ -28,7 +28,7 @@
         <a href="about.html">About</a>
         <a href="approach.html">The Approach</a>
         <a href="living.html">Effortless Living</a>
-        <a href="residences.html">Residences</a>
+        <a href="selections.html">Selections</a>
         <a class="nav-phone" href="tel:+15166609100">516-660-9100</a>
         <a class="nav-cta" href="contact.html">Get In Touch</a>
       </nav>
@@ -41,13 +41,12 @@
           <h2 class="eyebrow-title">Contact</h2>
           <span class="short-rule" aria-hidden="true"></span>
           <p class="lead">
-            To inquire about available residences or arrange a private viewing,
-            send a note and Azita will respond personally.
+            For general inquiries, please send a note or call.
           </p>
           <dl class="contact-list">
             <div>
               <dt>Email</dt>
-              <dd><a href="mailto:Azita@azitaj.com">Azita@azitaj.com</a></dd>
+              <dd><a href="mailto:info@azitaj.com">info@azitaj.com</a></dd>
             </div>
             <div>
               <dt>Phone</dt>
@@ -62,11 +61,14 @@
 
         <!--
           INQUIRY FORM
-          Sends through Formspree (free). To activate:
-          1. Create a form at https://formspree.io using Azita@azitaj.com
-          2. Replace YOUR_FORM_ID below with the ID Formspree gives you (e.g. xayzabcd)
+          Sends through FormSubmit (free, no account) to info@azitaj.com.
+          One-time activation: the first submission makes FormSubmit email a
+          confirmation link to info@azitaj.com. Click it once and the form is live.
         -->
-        <form class="inquiry" id="inquiry-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" novalidate>
+        <form class="inquiry" id="inquiry-form" action="https://formsubmit.co/ajax/info@azitaj.com" method="POST" novalidate>
+          <input type="hidden" name="_subject" value="New website inquiry from azitaj.com">
+          <input type="hidden" name="_template" value="table">
+          <input type="hidden" name="_captcha" value="false">
           <div class="field">
             <label for="f-name">Name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -82,19 +84,11 @@
             </div>
           </div>
           <div class="field">
-            <label for="f-interest">I'm interested in</label>
-            <select id="f-interest" name="interest">
-              <option>Available residences</option>
-              <option>A private viewing</option>
-              <option>A general inquiry</option>
-            </select>
-          </div>
-          <div class="field">
             <label for="f-message">Message</label>
             <textarea id="f-message" name="message" rows="5"></textarea>
           </div>
-          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button class="btn btn-solid" type="submit">Send Inquiry</button>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-solid" type="submit">Send Message</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -107,7 +101,7 @@
       <img class="footer-mark" src="assets/logo/monogram-j.png?v=20261030" width="600" height="600" alt="" loading="lazy">
       <ul class="footer-contact">
         <li>AzitaJ.com</li>
-        <li><a href="mailto:Azita@azitaj.com">Azita@azitaj.com</a></li>
+        <li><a href="mailto:info@azitaj.com">info@azitaj.com</a></li>
         <li><a href="tel:+15166609100">516-660-9100</a></li>
       </ul>
       <p class="footer-legal">&copy; <span id="year">2026</span> Azita J. All rights reserved.</p>

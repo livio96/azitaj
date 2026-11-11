@@ -162,6 +162,18 @@ p { margin: 0; }
 /* Image logo (bronze artwork) — height set here, width follows */
 .brand-image img { display: block; width: auto; height: calc(6.2rem * var(--home-logo-scale)); margin-block: -0.3rem; }
 .brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; color: var(--ink); flex: none; }
+/* Understated descriptor directly beneath the logo (home page) */
+.brand-block { display: flex; flex-direction: column; align-items: center; flex: none; }
+.brand-sub {
+  margin: 0.1rem 0 0;
+  font-family: var(--font-ui);
+  font-weight: 400;
+  font-size: 0.68rem;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--sage);
+  white-space: nowrap;
+}
 .brand-mark {
   font-family: var(--font-mark);
   font-size: calc(6rem * var(--home-logo-scale));
