@@ -652,3 +652,19 @@ p { margin: 0; }
   .visionary { text-align: left; }
   .visionary .short-rule { margin-inline: 0; }
 }
+
+/* ---------- Profile page (/profile): single readable column ---------- */
+.profile-text { max-width: var(--measure); margin-inline: auto; }
+.profile-role {
+  margin: 0.2rem 0 var(--space-m);
+  font-family: var(--font-ui);
+  font-size: calc(0.8rem * var(--label-scale));
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+.profile-text p + p { margin-top: 1.1em; }
+
+/* Discreet footer link */
+.footer-legal a { color: inherit; text-decoration: none; }
+.footer-legal a:hover, .footer-legal a:focus-visible { color: var(--gold); text-decoration: underline; text-underline-offset: 0.25em; }
