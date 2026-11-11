@@ -605,6 +605,11 @@ p { margin: 0; }
   .nav .nav-phone { display: none; }
 }
 
+/* The one-line home menu needs ~1230px; let it wrap on narrower screens */
+@media (max-width: 1240px) {
+  .page-home .nav { flex-wrap: wrap; justify-content: flex-end; gap: 0.25rem 1.5rem; }
+}
+
 /* Below desktop the home page stacks and scrolls like a normal page */
 @media (max-width: 1024px) {
   .page-home { height: auto; overflow: visible; }
