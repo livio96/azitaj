@@ -43,7 +43,7 @@
     }).then(function (r) {
       return r.json().then(function (d) { return { ok: r.ok, data: d }; });
     }).then(function (res) {
-      if (res.ok && String(res.data.success) === "true") {
+      if (res.ok && res.data.ok !== false) {
         form.reset();
         say("Thank you. Your inquiry has been sent and AzitaJ will be in touch.");
       } else {

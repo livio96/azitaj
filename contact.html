@@ -129,14 +129,11 @@
 
         <!--
           INQUIRY FORM
-          Sends through FormSubmit (free, no account) to info@azitaj.com.
-          One-time activation: the first submission makes FormSubmit email a
-          confirmation link to info@azitaj.com. Click it once and the form is live.
+          Sends through Formspree (form mkjrnzoe). Submissions go to the email
+          address on the Formspree account for this form (set to info@azitaj.com).
         -->
-        <form class="inquiry" id="inquiry-form" action="https://formsubmit.co/ajax/info@azitaj.com" method="POST" novalidate>
+        <form class="inquiry" id="inquiry-form" action="https://formspree.io/f/mkjrnzoe" method="POST" novalidate>
           <input type="hidden" name="_subject" value="New website inquiry from azitaj.com">
-          <input type="hidden" name="_template" value="table">
-          <input type="hidden" name="_captcha" value="false">
           <div class="field">
             <label for="f-name">Name</label>
             <input id="f-name" name="name" type="text" autocomplete="name" required>
@@ -155,7 +152,7 @@
             <label for="f-message">Message</label>
             <textarea id="f-message" name="message" rows="5"></textarea>
           </div>
-          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
           <button class="btn btn-solid" type="submit">Send Message</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
         </form>

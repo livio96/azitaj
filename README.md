@@ -52,7 +52,7 @@ To keep working on a saved version later, use **Open theme file…**. To undo a 
 
 ## Inquiry form
 
-The form on `contact.html` sends to info@azitaj.com through FormSubmit (free, no account). The first time anyone submits it, FormSubmit emails an activation link to info@azitaj.com. Click it once and every later inquiry arrives in that inbox. Until then, visitors see a message asking them to email info@azitaj.com directly.
+The form on `contact.html` posts to Formspree (`https://formspree.io/f/mkjrnzoe`). Inquiries arrive at the email address set on that Formspree form, which should be info@azitaj.com. If the form fails, visitors see a message asking them to email info@azitaj.com directly. The spam trap field is named `_gotcha`.
 
 ## Publish
 
